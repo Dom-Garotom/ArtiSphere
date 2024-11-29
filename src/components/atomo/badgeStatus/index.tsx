@@ -1,8 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-type Props = {
+type Props = TouchableOpacityProps & {
     text: string
     value?: number
     /** 
@@ -14,9 +14,9 @@ type Props = {
     iconNameColor?: string
 }
 
-export default function BadgeStatus({ iconName, text, value, iconNameSize = 18, iconNameColor = "#000" }: Props) {
+export default function BadgeStatus({ iconName, text, value, iconNameSize = 18, iconNameColor = "#000" , ...props }: Props) {
     return (
-        <TouchableOpacity style={styles.status}>
+        <TouchableOpacity style={styles.status} {...props}>
             <Icon name={iconName} size={iconNameSize} color={iconNameColor} style={{ width: 17 }} />
             <Text style={styles.status_text}>{value ? value : ""}{value && " - "}{text}</Text>
         </TouchableOpacity>

@@ -10,16 +10,15 @@ import useAuth from '@/src/hooks/auth'
 
 const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
 
-const signUpForms = z.object({
-    name: z.string().min(4, { message: "o nome deve ter no mínimo quatro letras" }),
+const signInForms = z.object({
     email: z.string().email( { message: "formato inválido de email"} ),
     senha: z.string().min(8 , {message: "A senha deve ter no mínimo 8 caracteres "})
     .regex(regex , {message : "A sua senha deve conter pelo menos uma letra maiúsucula , uma minúscula , um número e um caractere especial"}),
 })
 
-export default function SignUpForm() {
+export default function SignInForm() {
     const { control, handleSubmit, formState: { errors, isLoading } } = useForm({
-        resolver: zodResolver(signUpForms)
+        resolver: zodResolver(signInForms)
     });
 
     // const {serverError , signUp} = useAuth();
@@ -31,22 +30,6 @@ export default function SignUpForm() {
 
     return (
         <View style={{ gap: 16 }}>
-
-            <Controller
-                control={control}
-                name='name'
-                render={({ field: { onBlur, onChange, value } }) => (
-                    <InputDefault
-                        label={"Nome"}
-                        placeholder='Seu nome'
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                        messageError={errors.name?.message}
-                    />
-                )}
-
-            />
 
             <Controller
                 control={control}
@@ -83,7 +66,7 @@ export default function SignUpForm() {
             />
 
             <ButtonDefault
-                text='Criar conta'
+                text='Entrar'
                 color={colors.secondary}
                 onPress={handleSubmit(onSubmit)}
             />

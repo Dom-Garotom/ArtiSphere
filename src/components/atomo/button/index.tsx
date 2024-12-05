@@ -3,17 +3,20 @@ import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from "react
 
 type Props = TouchableOpacityProps & {
     color?: string,
-    text: string
+    text: string,
+    isLoading ?: boolean,
+    isBlock?: boolean,
 }
 
-export default function ButtonDefault({ color = colors.backgroundButton, text, ...props }: Props) {
+export default function ButtonDefault({ color = colors.backgroundButton, text, isLoading  , isBlock , ...props }: Props) {
     return (
         <TouchableOpacity 
-            style={[styles.button, { backgroundColor: color }]} 
-            activeOpacity={0.7}  {...props}
+            style={[styles.button, { backgroundColor: color } , isBlock && styles.block ]} 
+            activeOpacity={0.7} 
+            {...props}
         >
             <Text style={styles.textButton}>
-                {text}
+                {isLoading ? "Carregando..." : text}
             </Text>
         </TouchableOpacity>
     )
@@ -29,6 +32,12 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         alignItems: "center",
         justifyContent: 'center',
+        transitionDuration: "0.5"
+    },
+
+    block:{
+        opacity: 0.8,
+        backgroundColor: colors.error,
     },
 
     textButton: {

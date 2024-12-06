@@ -15,7 +15,7 @@ export default function useAuth() {
             if (response.data.success) {
                 storeToken(response.data.token.toString())
                 setLoading(false);
-                router.push("/home");
+                router.push("/(userRoutes)/info");
                 return
             }
 

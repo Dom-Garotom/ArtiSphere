@@ -34,6 +34,11 @@ export default function index() {
         onPress={() => router.navigate('/(auth)/signIn')}
       />
 
+    <ButtonDefault
+        text='Faça login para continuar explorando'
+        onPress={() => router.navigate('/(userRoutes)/info')}
+      />
+
     </View>
   )
 }

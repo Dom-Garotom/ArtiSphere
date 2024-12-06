@@ -45,14 +45,14 @@ const styles = StyleSheet.create({
     gap: 16,
   },
 
-  imageContainer:{
+  imageContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: 'center',
     gap: 12,
   },
 
-  image:{
+  image: {
     width: 150,
     height: 150,
     borderRadius: 16,

@@ -1,5 +1,4 @@
-import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import InputDefault from '../../atomo/inputDefault'
 import ButtonDefault from '../../atomo/button'
 import colors from '@/src/styles/color'
@@ -8,28 +7,34 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from 'zod'
 import useAuth from '@/src/hooks/auth'
 
-const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*.])[A-Za-z\d@#$%^&*.]+$/;
 
-const signInForms = z.object({
-    email: z.string().email( { message: "formato inválido de email"} ),
-    senha: z.string().min(8 , {message: "A senha deve ter no mínimo 8 caracteres "})
-    .regex(regex , {message : "A sua senha deve conter pelo menos uma letra maiúsucula , uma minúscula , um número e um caractere especial"}),
+const signUpForms = z.object({
+    email: z.string().email({ message: "formato inválido de email" }),
+    senha: z.string().min(8, { message: "A senha deve ter no mínimo 8 caracteres " })
+        .regex(regex, { message: "A sua senha deve conter pelo menos uma letra maiúsucula , uma minúscula , um número e um dos [@#$%^&*.]" }),
 })
 
-export default function SignInForm() {
-    const { control, handleSubmit, formState: { errors, isLoading } } = useForm({
-        resolver: zodResolver(signInForms)
+export default function SignUpForm() {
+    const { control, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(signUpForms)
     });
 
-    // const {serverError , signUp} = useAuth();
+    const { serverMessageError , signIn, serverLoading } = useAuth();
 
     const onSubmit = (data: any) => {
-        console.log('Dados enviados:', data);
-        // signUp(data);
+        console.log("sbmit")
+        signIn(data);
     };
 
     return (
         <View style={{ gap: 16 }}>
+
+            {serverMessageError &&
+                <View>
+                    <Text style={{ color: colors.error }}>{`${serverMessageError}`}</Text>
+                </View>
+            }
 
             <Controller
                 control={control}
@@ -69,6 +74,7 @@ export default function SignInForm() {
                 text='Entrar'
                 color={colors.secondary}
                 onPress={handleSubmit(onSubmit)}
+                isLoading={serverLoading}
             />
         </View>
     )

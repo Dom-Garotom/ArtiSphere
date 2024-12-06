@@ -11,8 +11,9 @@ type Props = TouchableOpacityProps & {
 export default function ButtonDefault({ color = colors.backgroundButton, text, isLoading  , isBlock , ...props }: Props) {
     return (
         <TouchableOpacity 
-            style={[styles.button, { backgroundColor: color } , isBlock && styles.block ]} 
-            activeOpacity={0.7} 
+            style={[styles.button, { backgroundColor: color } , isLoading && styles.loading ,  isBlock && styles.block ]} 
+            activeOpacity={0.7}
+            disabled={isLoading || isBlock}
             {...props}
         >
             <Text style={styles.textButton}>
@@ -38,6 +39,10 @@ const styles = StyleSheet.create({
     block:{
         opacity: 0.8,
         backgroundColor: colors.error,
+    },
+
+    loading:{
+        opacity: 0.8,
     },
 
     textButton: {

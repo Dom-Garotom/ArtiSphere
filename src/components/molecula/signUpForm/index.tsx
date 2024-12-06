@@ -1,4 +1,3 @@
-import React from 'react'
 import { View, Text } from 'react-native'
 import InputDefault from '../../atomo/inputDefault'
 import ButtonDefault from '../../atomo/button'
@@ -7,7 +6,6 @@ import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from 'zod'
 import useAuth from '@/src/hooks/auth'
-import { Toaster } from 'sonner-native'
 
 const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*.])[A-Za-z\d@#$%^&*.]+$/;
 
@@ -19,24 +17,22 @@ const signUpForms = z.object({
 })
 
 export default function SignUpForm() {
-    const { control, handleSubmit, formState: { errors, isLoading } } = useForm({
+    const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(signUpForms)
     });
 
-    const { serverError, signUp } = useAuth();
+    const { serverMessageError , signUp, serverLoading } = useAuth();
 
     const onSubmit = (data: any) => {
-        console.log('Dados enviados:', data);
-        signUp(data)
+        signUp(data);
     };
 
     return (
         <View style={{ gap: 16 }}>
-            <Toaster/>
 
-            {serverError &&
+            {serverMessageError &&
                 <View>
-                    <Text style={{ color: colors.error }}>{`${serverError}`}</Text>
+                    <Text style={{ color: colors.error }}>{`${serverMessageError}`}</Text>
                 </View>
             }
 
@@ -94,8 +90,7 @@ export default function SignUpForm() {
                 text='Criar conta'
                 color={colors.secondary}
                 onPress={handleSubmit(onSubmit)}
-                isLoading={isLoading}
-                isBlock={serverError ? true : false}
+                isLoading={serverLoading}
             />
         </View>
     )

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { router } from "expo-router";
 import artiSphereApi from "@/src/service/api/artiSphere";
-import { storeToken } from "@/src/utils/store";
+import { storeToken } from "@/src/utils/token/store";
 
 export default function useAuth() {
     const [serverMessageError, setserverMessageError] = useState("");

@@ -18,6 +18,7 @@ export default function TagsArticle( {tags} : Tags) {
 
 const styles = StyleSheet.create({
     container_tags: {
+        flexWrap: "wrap",
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',

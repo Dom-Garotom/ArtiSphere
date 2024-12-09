@@ -3,8 +3,7 @@ import TagsArticle from '@/src/components/molecula/tagsArticle'
 import ArticleActions from '../articleActions'
 import { styles } from './style'
 
-
-type Article = {
+export type Article = {
     author :string,
     title : string,
     timeArticle: string
